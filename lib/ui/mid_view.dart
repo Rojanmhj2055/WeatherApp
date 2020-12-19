@@ -2,5 +2,5 @@ import 'package:flutter/material.dart';
 
 Widget midView()
 {
-  return;
+  return Container();
 }

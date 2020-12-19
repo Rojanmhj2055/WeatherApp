@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/model/weather_forcast_model.dart';
 import 'package:weather_app/network/network.dart';
+import 'package:weather_app/ui/mid_view.dart'
 class WeatherApp extends StatefulWidget{
   @override 
   _WeatherAppState createState()=>_WeatherAppState();
 }
-
+//sdfasdfsadfsd
 class _WeatherAppState extends State<WeatherApp>{
   Future<WeatherForecastModel> forcastObject;
   String _cityName = "Kathmandu";
