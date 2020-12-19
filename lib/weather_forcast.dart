@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/model/weather_forcast_model.dart';
 import 'package:weather_app/network/network.dart';
-import 'package:weather_app/ui/mid_view.dart'
+import 'package:weather_app/ui/mid_view.dart';
 class WeatherApp extends StatefulWidget{
   @override 
   _WeatherAppState createState()=>_WeatherAppState();
@@ -14,7 +14,7 @@ class _WeatherAppState extends State<WeatherApp>{
   void initState() {
 
     super.initState();
-    forcastObject = Network().getWeatherForecast(cityName:_cityName);
+    forcastObject = weatherForecast(cityName: _cityName);
   }
   @override
   Widget build(BuildContext context){
@@ -32,7 +32,7 @@ class _WeatherAppState extends State<WeatherApp>{
                {
                   return Column(
                     children: <Widget>[
-                      mid_view(snapshot),
+                      // mid_view(snapshot),
                     ]
                   );
                }else{
@@ -62,11 +62,16 @@ class _WeatherAppState extends State<WeatherApp>{
                   contentPadding: EdgeInsets.all(8.5),
                  ),
                  onSubmitted:(value)=>{
-                    
+                    setState((){
+                      _cityName = value;
+                      forcastObject = weatherForecast(cityName: _cityName);
+                    })
                  },
                ),
              );
            }
+
+           Future<WeatherForecastModel> weatherForecast({String cityName}) => new Network().getWeatherForecast(cityName:_cityName);
 
  
 }
