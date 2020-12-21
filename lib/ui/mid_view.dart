@@ -6,7 +6,7 @@ must use lat lon one not city one
 */ 
 Widget midView(AsyncSnapshot<WeatherForecastModel> snapshot)
 {
-    var forcastList =snapshot.data.list;
+    //var forcastList =snapshot.data.list;
     var cityname = snapshot.data.city.name;
         var country = snapshot.data.city.country;
                 Container midview = Container(

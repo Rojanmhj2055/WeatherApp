@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/model/weather_forcast_model.dart';
 import 'package:weather_app/network/network.dart';
-import 'package:weather_app/ui/mid_view.dart';
+// import 'package:weather_app/ui/mid_view.dart';
 class WeatherApp extends StatefulWidget{
   @override 
   _WeatherAppState createState()=>_WeatherAppState();
@@ -9,12 +9,17 @@ class WeatherApp extends StatefulWidget{
 //sdfasdfsadfsd
 class _WeatherAppState extends State<WeatherApp>{
   Future<WeatherForecastModel> forcastObject;
+  Future<Geocode>geocodeObject;
   String _cityName = "Kathmandu";
   @override
   void initState() {
 
     super.initState();
-    forcastObject = weatherForecast(cityName: _cityName);
+    geocodeObject = geocodeForcast(cityName:_cityName);
+    geocodeObject.then((res){
+      forcastObject = weatherForecast(res);
+    });
+    
   }
   @override
   Widget build(BuildContext context){
@@ -64,14 +69,19 @@ class _WeatherAppState extends State<WeatherApp>{
                  onSubmitted:(value)=>{
                     setState((){
                       _cityName = value;
-                      forcastObject = weatherForecast(cityName: _cityName);
+                      geocodeObject = geocodeForcast(cityName:_cityName);
+                      geocodeObject.then((res){
+                      forcastObject = weatherForecast(res);
+                      });
+                      
                     })
                  },
                ),
              );
            }
 
-           Future<WeatherForecastModel> weatherForecast({String cityName}) => new Network().getWeatherForecast(cityName:_cityName);
+           Future<WeatherForecastModel> weatherForecast(Geocode snapshot) => new Network().getWeatherForecast(snapshot);
+          Future<Geocode> geocodeForcast({String cityName}) => new Network().getGeocode(cityName:_cityName);
 
  
 }

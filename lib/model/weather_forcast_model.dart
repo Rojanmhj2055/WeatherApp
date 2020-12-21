@@ -1,3 +1,387 @@
+class Geocode {
+  String documentation;
+  List<Features> features;
+  List<Licenses> licenses;
+  Rate rate;
+  Status status;
+  StayInformed stayInformed;
+  String thanks;
+  Timestamp timestamp;
+  int totalResults;
+  String type;
+
+  Geocode(
+      {this.documentation,
+      this.features,
+      this.licenses,
+      this.rate,
+      this.status,
+      this.stayInformed,
+      this.thanks,
+      this.timestamp,
+      this.totalResults,
+      this.type});
+
+  Geocode.fromJson(Map<String, dynamic> json) {
+    documentation = json['documentation'];
+    if (json['features'] != null) {
+      features = new List<Features>();
+      json['features'].forEach((v) {
+        features.add(new Features.fromJson(v));
+      });
+    }
+    if (json['licenses'] != null) {
+      licenses = new List<Licenses>();
+      json['licenses'].forEach((v) {
+        licenses.add(new Licenses.fromJson(v));
+      });
+    }
+    rate = json['rate'] != null ? new Rate.fromJson(json['rate']) : null;
+    status =
+        json['status'] != null ? new Status.fromJson(json['status']) : null;
+    stayInformed = json['stay_informed'] != null
+        ? new StayInformed.fromJson(json['stay_informed'])
+        : null;
+    thanks = json['thanks'];
+    timestamp = json['timestamp'] != null
+        ? new Timestamp.fromJson(json['timestamp'])
+        : null;
+    totalResults = json['total_results'];
+    type = json['type'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['documentation'] = this.documentation;
+    if (this.features != null) {
+      data['features'] = this.features.map((v) => v.toJson()).toList();
+    }
+    if (this.licenses != null) {
+      data['licenses'] = this.licenses.map((v) => v.toJson()).toList();
+    }
+    if (this.rate != null) {
+      data['rate'] = this.rate.toJson();
+    }
+    if (this.status != null) {
+      data['status'] = this.status.toJson();
+    }
+    if (this.stayInformed != null) {
+      data['stay_informed'] = this.stayInformed.toJson();
+    }
+    data['thanks'] = this.thanks;
+    if (this.timestamp != null) {
+      data['timestamp'] = this.timestamp.toJson();
+    }
+    data['total_results'] = this.totalResults;
+    data['type'] = this.type;
+    return data;
+  }
+}
+
+class Features {
+  Geometry geometry;
+  Properties properties;
+  String type;
+
+  Features({this.geometry, this.properties, this.type});
+
+  Features.fromJson(Map<String, dynamic> json) {
+    geometry = json['geometry'] != null
+        ? new Geometry.fromJson(json['geometry'])
+        : null;
+    properties = json['properties'] != null
+        ? new Properties.fromJson(json['properties'])
+        : null;
+    type = json['type'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.geometry != null) {
+      data['geometry'] = this.geometry.toJson();
+    }
+    if (this.properties != null) {
+      data['properties'] = this.properties.toJson();
+    }
+    data['type'] = this.type;
+    return data;
+  }
+}
+
+class 
+Geometry {
+  List<double> coordinates;
+  String type;
+
+  Geometry({this.coordinates, this.type});
+
+  Geometry.fromJson(Map<String, dynamic> json) {
+    coordinates = json['coordinates'].cast<double>();
+    type = json['type'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['coordinates'] = this.coordinates;
+    data['type'] = this.type;
+    return data;
+  }
+}
+
+class Properties {
+  Bounds bounds;
+  Components components;
+  int confidence;
+  String formatted;
+
+  Properties({this.bounds, this.components, this.confidence, this.formatted});
+
+  Properties.fromJson(Map<String, dynamic> json) {
+    bounds =
+        json['bounds'] != null ? new Bounds.fromJson(json['bounds']) : null;
+    components = json['components'] != null
+        ? new Components.fromJson(json['components'])
+        : null;
+    confidence = json['confidence'];
+    formatted = json['formatted'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.bounds != null) {
+      data['bounds'] = this.bounds.toJson();
+    }
+    if (this.components != null) {
+      data['components'] = this.components.toJson();
+    }
+    data['confidence'] = this.confidence;
+    data['formatted'] = this.formatted;
+    return data;
+  }
+}
+
+class Bounds {
+  Northeast northeast;
+  Northeast southwest;
+
+  Bounds({this.northeast, this.southwest});
+
+  Bounds.fromJson(Map<String, dynamic> json) {
+    northeast = json['northeast'] != null
+        ? new Northeast.fromJson(json['northeast'])
+        : null;
+    southwest = json['southwest'] != null
+        ? new Northeast.fromJson(json['southwest'])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.northeast != null) {
+      data['northeast'] = this.northeast.toJson();
+    }
+    if (this.southwest != null) {
+      data['southwest'] = this.southwest.toJson();
+    }
+    return data;
+  }
+}
+
+class Northeast {
+  double lat;
+  double lng;
+
+  Northeast({this.lat, this.lng});
+
+  Northeast.fromJson(Map<String, dynamic> json) {
+    lat = json['lat'];
+    lng = json['lng'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['lat'] = this.lat;
+    data['lng'] = this.lng;
+    return data;
+  }
+}
+
+class Components {
+  String iSO31661Alpha2;
+  String iSO31661Alpha3;
+  String sCategory;
+  String sType;
+  String attraction;
+  String city;
+  String continent;
+  String country;
+  String countryCode;
+  String county;
+  String neighbourhood;
+  String postcode;
+  String region;
+  String road;
+  String suburb;
+
+  Components(
+      {this.iSO31661Alpha2,
+      this.iSO31661Alpha3,
+      this.sCategory,
+      this.sType,
+      this.attraction,
+      this.city,
+      this.continent,
+      this.country,
+      this.countryCode,
+      this.county,
+      this.neighbourhood,
+      this.postcode,
+      this.region,
+      this.road,
+      this.suburb});
+
+  Components.fromJson(Map<String, dynamic> json) {
+    iSO31661Alpha2 = json['ISO_3166-1_alpha-2'];
+    iSO31661Alpha3 = json['ISO_3166-1_alpha-3'];
+    sCategory = json['_category'];
+    sType = json['_type'];
+    attraction = json['attraction'];
+    city = json['city'];
+    continent = json['continent'];
+    country = json['country'];
+    countryCode = json['country_code'];
+    county = json['county'];
+    neighbourhood = json['neighbourhood'];
+    postcode = json['postcode'];
+    region = json['region'];
+    road = json['road'];
+    suburb = json['suburb'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['ISO_3166-1_alpha-2'] = this.iSO31661Alpha2;
+    data['ISO_3166-1_alpha-3'] = this.iSO31661Alpha3;
+    data['_category'] = this.sCategory;
+    data['_type'] = this.sType;
+    data['attraction'] = this.attraction;
+    data['city'] = this.city;
+    data['continent'] = this.continent;
+    data['country'] = this.country;
+    data['country_code'] = this.countryCode;
+    data['county'] = this.county;
+    data['neighbourhood'] = this.neighbourhood;
+    data['postcode'] = this.postcode;
+    data['region'] = this.region;
+    data['road'] = this.road;
+    data['suburb'] = this.suburb;
+    return data;
+  }
+}
+
+class Licenses {
+  String name;
+  String url;
+
+  Licenses({this.name, this.url});
+
+  Licenses.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    url = json['url'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['url'] = this.url;
+    return data;
+  }
+}
+
+class Rate {
+  int limit;
+  int remaining;
+  int reset;
+
+  Rate({this.limit, this.remaining, this.reset});
+
+  Rate.fromJson(Map<String, dynamic> json) {
+    limit = json['limit'];
+    remaining = json['remaining'];
+    reset = json['reset'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['limit'] = this.limit;
+    data['remaining'] = this.remaining;
+    data['reset'] = this.reset;
+    return data;
+  }
+}
+
+class Status {
+  int code;
+  String message;
+
+  Status({this.code, this.message});
+
+  Status.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    message = json['message'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['code'] = this.code;
+    data['message'] = this.message;
+    return data;
+  }
+}
+
+class StayInformed {
+  String blog;
+  String twitter;
+
+  StayInformed({this.blog, this.twitter});
+
+  StayInformed.fromJson(Map<String, dynamic> json) {
+    blog = json['blog'];
+    twitter = json['twitter'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['blog'] = this.blog;
+    data['twitter'] = this.twitter;
+    return data;
+  }
+}
+
+class Timestamp {
+  String createdHttp;
+  int createdUnix;
+
+  Timestamp({this.createdHttp, this.createdUnix});
+
+  Timestamp.fromJson(Map<String, dynamic> json) {
+    createdHttp = json['created_http'];
+    createdUnix = json['created_unix'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['created_http'] = this.createdHttp;
+    data['created_unix'] = this.createdUnix;
+    return data;
+  }
+}
+
+
+
+
+
+
 
 class WeatherForecastModel {
   City city;
