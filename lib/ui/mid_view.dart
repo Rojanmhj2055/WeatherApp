@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:weather_app/model/weather_forcast_model.dart';
 import 'package:weather_app/util/forcast_util.dart';
 import 'package:weather_icons/weather_icons.dart';
+import 'package:weather_app/util/convertIcon.dart';
 Widget midView(AsyncSnapshot<WeatherForecastModel> snapshot)
 {
     var currentForcast = snapshot.data.current;
@@ -27,19 +28,20 @@ Widget midView(AsyncSnapshot<WeatherForecastModel> snapshot)
                         color:Colors.black87,),),
 
                     SizedBox(height:10),
-
-                    Icon(Icons.wb_sunny,size:100,),
+                    Padding(padding:EdgeInsets.all(15.0) ,
+                    child:getWeatherIcon(id:currentForcast.weather[0].id,color:Colors.black54,size:100),),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical:8.0,horizontal:12),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                              Text("${currentForcast.temp.toStringAsFixed(0)}°C",
+                          Padding(padding: EdgeInsets.all(8.0),
+                             child: Text("${currentForcast.temp.toStringAsFixed(0)}°C",
                               style: TextStyle(
                                 fontSize:30,
                                 fontWeight:FontWeight.bold,
                               ) ,),
-                              
+                          ),
                               Text("${currentForcast.weather[0].description.toUpperCase()}",
                               style:TextStyle(
                                 fontSize:14,
