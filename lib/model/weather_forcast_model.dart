@@ -400,8 +400,8 @@ class WeatherForecastModel {
       this.alerts});
 
   WeatherForecastModel.fromJson(Map<String, dynamic> json) {
-    lat = json['lat'];
-    lon = json['lon'];
+    lat = json['lat'].toDouble();
+    lon = json['lon'].toDouble();
     timezone = json['timezone'];
     timezoneOffset = json['timezone_offset'];
     current =
@@ -452,12 +452,12 @@ class Current {
   int dt;
   int sunrise;
   int sunset;
-  int temp;
+  double temp;
   double feelsLike;
   int pressure;
   int humidity;
   double dewPoint;
-  int uvi;
+  double uvi;
   int clouds;
   int visibility;
   double windSpeed;
@@ -484,15 +484,15 @@ class Current {
     dt = json['dt'];
     sunrise = json['sunrise'];
     sunset = json['sunset'];
-    temp = json['temp'];
-    feelsLike = json['feels_like'];
+    temp = json['temp'].toDouble();
+    feelsLike = json['feels_like'].toDouble();
     pressure = json['pressure'];
     humidity = json['humidity'];
-    dewPoint = json['dew_point'];
-    uvi = json['uvi'];
+    dewPoint = json['dew_point'].toDouble();
+    uvi = json['uvi'].toDouble();
     clouds = json['clouds'];
     visibility = json['visibility'];
-    windSpeed = json['wind_speed'];
+    windSpeed = json['wind_speed'].toDouble();
     windDeg = json['wind_deg'];
     if (json['weather'] != null) {
       weather = new List<Weather>();
@@ -581,15 +581,15 @@ class Hourly {
 
   Hourly.fromJson(Map<String, dynamic> json) {
     dt = json['dt'];
-    temp = json['temp'];
-    feelsLike = json['feels_like'];
+    temp = json['temp'].toDouble();
+    feelsLike = json['feels_like'].toDouble();
     pressure = json['pressure'];
     humidity = json['humidity'];
-    dewPoint = json['dew_point'];
-    uvi = json['uvi'];
+    dewPoint = json['dew_point'].toDouble();
+    uvi = json['uvi'].toDouble();
     clouds = json['clouds'];
     visibility = json['visibility'];
-    windSpeed = json['wind_speed'];
+    windSpeed = json['wind_speed'].toDouble();
     windDeg = json['wind_deg'];
     if (json['weather'] != null) {
       weather = new List<Weather>();
@@ -597,7 +597,7 @@ class Hourly {
         weather.add(new Weather.fromJson(v));
       });
     }
-    pop = json['pop'];
+    pop = json['pop'].toDouble();
   }
 
   Map<String, dynamic> toJson() {
@@ -665,8 +665,8 @@ class Daily {
         : null;
     pressure = json['pressure'];
     humidity = json['humidity'];
-    dewPoint = json['dew_point'];
-    windSpeed = json['wind_speed'];
+    dewPoint = json['dew_point'].toDouble();
+    windSpeed = json['wind_speed'].toDouble();
     windDeg = json['wind_deg'];
     if (json['weather'] != null) {
       weather = new List<Weather>();
@@ -675,9 +675,9 @@ class Daily {
       });
     }
     clouds = json['clouds'];
-    pop = json['pop'];
+    pop = json['pop'].toDouble();
     rain = json['rain'];
-    uvi = json['uvi'];
+    uvi = json['uvi'].toDouble();
   }
 
   Map<String, dynamic> toJson() {
@@ -747,10 +747,10 @@ class FeelsLike {
   FeelsLike({this.day, this.night, this.eve, this.morn});
 
   FeelsLike.fromJson(Map<String, dynamic> json) {
-    day = json['day'];
-    night = json['night'];
-    eve = json['eve'];
-    morn = json['morn'];
+    day = json['day'].toDouble();
+    night = json['night'].toDouble();
+    eve = json['eve'].toDouble();
+    morn = json['morn'].toDouble();
   }
 
   Map<String, dynamic> toJson() {
