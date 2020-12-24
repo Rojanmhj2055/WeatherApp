@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/model/weather_forcast_model.dart';
 import 'package:weather_app/network/network.dart';
-// import 'package:weather_app/ui/mid_view.dart';
+import 'package:weather_app/ui/mid_view.dart';
 class WeatherApp extends StatefulWidget{
   @override 
   _WeatherAppState createState()=>_WeatherAppState();
@@ -18,13 +18,10 @@ class _WeatherAppState extends State<WeatherApp>{
     geocodeObject = geocodeForcast(cityName:_cityName);
     geocodeObject.then((res){
       print(res.features[0].geometry.coordinates[0]);
+      print(res.features[0].geometry.coordinates[1]);
       forcastObject = weatherForecast(res);
       // print(forcastObject.then((value) => value.alerts[4]));
-       forcastObject.then((value){
-      print(_cityName);
-      print(value.current.temp);
-
-    });
+       
     });
    
   }
@@ -34,6 +31,7 @@ class _WeatherAppState extends State<WeatherApp>{
      body: ListView(
        children: <Widget>[
          textFieldView(),
+         
          Container(
            //Future Builder is expectin WeatherForecast Model
            //isn't necessary to write
@@ -42,13 +40,12 @@ class _WeatherAppState extends State<WeatherApp>{
              builder: (BuildContext context, AsyncSnapshot<WeatherForecastModel> snapshot){
                if(snapshot.hasData)
                {
-                 print(snapshot.data.current.dt);
-                 return Text("Working");
-                  // return Column(
-                  //   children: <Widget>[
-                  //     // mid_view(snapshot,"Kathmandu"),
-                  //   ]
-                  // );
+              
+                  return Column(
+                    children: <Widget>[
+                      midView(snapshot),
+                    ]
+                  );
                }else{
                  return Container(
                    child: Center(

@@ -1,27 +1,94 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/model/weather_forcast_model.dart';
-/*
-The API Is not working right now 
-must use lat lon one not city one
-*/ 
-Widget midView(AsyncSnapshot<WeatherForecastModel> snapshot,String location)
+import 'package:weather_app/util/forcast_util.dart';
+import 'package:weather_icons/weather_icons.dart';
+Widget midView(AsyncSnapshot<WeatherForecastModel> snapshot)
 {
-    //var forcastList =snapshot.data.list;
+    var currentForcast = snapshot.data.current;
     
-                Container midview = Container(
-                  child:Padding(padding: const EdgeInsets.all(14.0),
-                    child: Column(
-                      mainAxisAlignment:MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(location
-                        ,style: TextStyle(
-                          fontWeight:FontWeight.bold,
-                          fontSize:18,
-                          color:Colors.black87,
-                        ),),
+    var location = snapshot.data.timezone;
+     var millisecondsSinceEpoch =new DateTime.fromMillisecondsSinceEpoch( snapshot.data.current.dt*1000);
+
+
+       Container midview = Container(
+              child:Padding(padding: const EdgeInsets.all(14.0),
+                                    child: Column(
+                                      mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Text(location
+                                        ,style: TextStyle(
+                                          fontWeight:FontWeight.bold,
+                                          fontSize:18,
+                                          color:Colors.black87,
+                                        ),),
+                                        Text("${Util.getFormattedDate(millisecondsSinceEpoch)}",
+                        style:TextStyle(
+                        fontSize:15,
+                        color:Colors.black87,),),
+
+                    SizedBox(height:10),
+
+                    Icon(Icons.wb_sunny,size:100,),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical:8.0,horizontal:12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                              Text("${currentForcast.temp.toStringAsFixed(0)}°C",
+                              style: TextStyle(
+                                fontSize:30,
+                                fontWeight:FontWeight.bold,
+                              ) ,),
+                              
+                              Text("${currentForcast.weather[0].description.toUpperCase()}",
+                              style:TextStyle(
+                                fontSize:14,
+                              )),
+                              
+                        ],
+                      ),),
+                      Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 12),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                  Padding(padding:const EdgeInsets.all(8.0) ,  
+                                  child:Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children:<Widget>[
+                                          Text("${currentForcast.windSpeed.toStringAsFixed(2)}m/s",
+                                          style:TextStyle(
+                                            fontSize:14,
+                                          ) ,
+                                          ),
+                                          BoxedIcon(WeatherIcons.wind_beaufort_1),
+                                      ]
+                                    ),
+                                  ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children:<Widget>[ 
+                                        Padding(padding: EdgeInsets.all(8.0),
+                                        child:Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children:<Widget>[
+                                          Text("${currentForcast.humidity.toStringAsFixed(2)}%",
+                                          style:TextStyle(
+                                            fontSize:14,
+                                          ) ,
+                                          ),
+                                          BoxedIcon(WeatherIcons.humidity),
+                                      ]
+                                    ),),]
+                                    ),
+                                    
+                                  ]
+                              ),),
+                    
           ],
-        ),
+        
          )
-    ) ;
+              )
+    );
   return midview;
 }

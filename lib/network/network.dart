@@ -22,12 +22,9 @@ class Network {
      print(finalUrl);
     final response = await get(Uri.encodeFull(finalUrl));
     if(response.statusCode==200){
-      print(response.statusCode);
-         //we get the actual mapped model (dart object)
-         print(jsonDecode(response.body));
-         WeatherForecastModel p = WeatherForecastModel.fromJson(json.decode(response.body));
-         print(p);
-       return p;
+      
+        return WeatherForecastModel.fromJson(json.decode(response.body));
+         
      }else{
        print("Error");
          throw Exception("Error from response!!");

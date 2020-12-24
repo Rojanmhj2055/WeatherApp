@@ -19,6 +19,8 @@ environment:
 dependencies:
   # opencage_geocoder: ^1.0.1
   http: ^0.12.2
+  weather_icons: ^2.0.2
+  intl: ^0.16.1
   flutter:
     
     sdk: flutter
