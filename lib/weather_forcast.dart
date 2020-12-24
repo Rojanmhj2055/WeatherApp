@@ -19,7 +19,7 @@ class _WeatherAppState extends State<WeatherApp>{
     geocodeObject.then((res){
       forcastObject = weatherForecast(res);
     });
-    
+    // print(forcastObject.Current.temp);
   }
   @override
   Widget build(BuildContext context){
@@ -35,11 +35,12 @@ class _WeatherAppState extends State<WeatherApp>{
              builder: (BuildContext context, AsyncSnapshot<WeatherForecastModel> snapshot){
                if(snapshot.hasData)
                {
-                  return Column(
-                    children: <Widget>[
-                      // mid_view(snapshot),
-                    ]
-                  );
+                 return Text("Working");
+                  // return Column(
+                  //   children: <Widget>[
+                  //     // mid_view(snapshot,"Kathmandu"),
+                  //   ]
+                  // );
                }else{
                  return Container(
                    child: Center(

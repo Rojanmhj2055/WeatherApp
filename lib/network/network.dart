@@ -18,7 +18,8 @@ class Network {
      
      var appId = Util.appId;
     // change to metrics or imperial
-     var finalUrl = url+"?lat=+"+latitude.toString()+"&lon="+longitude.toString()+"+&appid="+appId;
+     var finalUrl = url+'?lat=$latitude&lon=$longitude&exclude=minutely&units=metric&appid='+appId;
+     print(finalUrl);
     final response = await get(Uri.encodeFull(finalUrl));
     if(response.statusCode==200){
          //we get the actual mapped model (dart object)
