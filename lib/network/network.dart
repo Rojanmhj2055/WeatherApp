@@ -7,11 +7,21 @@ import 'package:weather_app/util/forcast_util.dart';
  
 class Network {
    
-  Future<WeatherForecastModel>  getWeatherForecast( Geocode snapshot) async
+  Future<WeatherForecastModel>  getWeatherForecast( Geocode snapshot,List lst) async
   {
-    var longitude = snapshot.features[0].geometry.coordinates[0];
-    var latitude = snapshot.features[0].geometry.coordinates[1];
-
+  
+    var longitude;
+    var latitude;
+    if(snapshot==null){
+      longitude = lst[0];
+      latitude = lst[1];
+      print("The snapshot is null");
+     
+    } else 
+    {
+      longitude = snapshot.features[0].geometry.coordinates[0];
+     latitude = snapshot.features[0].geometry.coordinates[1];
+    }
     
    
      var url = Util.url;
@@ -23,6 +33,7 @@ class Network {
     final response = await get(Uri.encodeFull(finalUrl));
     if(response.statusCode==200){
       
+      print("Api Caled");
         return WeatherForecastModel.fromJson(json.decode(response.body));
          
      }else{

@@ -1,7 +1,12 @@
+
+import "dart:async";
 import 'package:flutter/material.dart';
 import 'package:weather_app/model/weather_forcast_model.dart';
 import 'package:weather_app/network/network.dart';
+import 'package:weather_app/ui/bottom_view.dart';
 import 'package:weather_app/ui/mid_view.dart';
+import 'package:geolocator/geolocator.dart';
+
 class WeatherApp extends StatefulWidget{
   @override 
   _WeatherAppState createState()=>_WeatherAppState();
@@ -9,22 +14,46 @@ class WeatherApp extends StatefulWidget{
 //sdfasdfsadfsd
 class _WeatherAppState extends State<WeatherApp>{
   Future<WeatherForecastModel> forcastObject;
+  List<double> lst =  List<double>(2);
   Future<Geocode>geocodeObject;
+  Future<Position>location;
   String _cityName = "Chicago";
+
   @override
   void initState() {
 
     super.initState();
-    geocodeObject = geocodeForcast(cityName:_cityName);
-    geocodeObject.then((res){
-      print(res.features[0].geometry.coordinates[0]);
-      print(res.features[0].geometry.coordinates[1]);
-      forcastObject = weatherForecast(res);
-      // print(forcastObject.then((value) => value.alerts[4]));
-       
+    location = getCurrentLocation();
+    location.then((value){
+      setState(() {
+
+       lst[0]=value.longitude;
+       lst[1]=(value.latitude);
+       print(lst);
+      forcastObject = weatherForecast(null,lst);
+      });
+      
+    }).catchError((error){
+      print(error);
+      geocodeObject = geocodeForcast(cityName:_cityName);
+      geocodeObject.then((value){
+        setState(() {
+          forcastObject = weatherForecast(value, lst);
+        });
+        
+      });
+
     });
-   
+      
   }
+  
+  Future<Position> getCurrentLocation () async{
+
+    var location = await Geolocator().getCurrentPosition(desiredAccuracy:LocationAccuracy.high);
+    return location;
+  }
+  
+  
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -44,6 +73,7 @@ class _WeatherAppState extends State<WeatherApp>{
                   return Column(
                     children: <Widget>[
                       midView(snapshot),
+                      bottomView(snapshot, context),
                     ]
                   );
                }else{
@@ -72,22 +102,25 @@ class _WeatherAppState extends State<WeatherApp>{
                      borderRadius: BorderRadius.circular(10.0),),
                   contentPadding: EdgeInsets.all(8.5),
                  ),
-                 onSubmitted:(value)=>{
-                    setState((){
-                      _cityName = value;
-                      geocodeObject = geocodeForcast(cityName:_cityName);
-                      geocodeObject.then((res){
-                      forcastObject = weatherForecast(res);
+                 onSubmitted:(value){
+                   if(value.isNotEmpty){
+                     _cityName = value;
+                      geocodeObject =geocodeForcast(cityName :_cityName);
+                      geocodeObject.then((value) {
+                        setState(() {
+                          forcastObject = weatherForecast(value, lst);
+                        });
                       });
-                      
-                    })
+                   }
                  },
-               ),
-             );
-           }
-
-           Future<WeatherForecastModel> weatherForecast(Geocode snapshot) => new Network().getWeatherForecast(snapshot);
-          Future<Geocode> geocodeForcast({String cityName}) => new Network().getGeocode(cityName:_cityName);
+                                ),
+                              );
+              }
+                 
+                Future<WeatherForecastModel> weatherForecast(Geocode snapshot,List lst) => new Network().getWeatherForecast(snapshot,lst);
+                Future<Geocode> geocodeForcast({String cityName}) => new Network().getGeocode(cityName:_cityName);
+                
+                  
 
  
 }
